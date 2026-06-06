@@ -1,0 +1,15 @@
+<h1>Learning Resources</h1>
+
+<ul>
+    {% for resource in resources %}
+        <li>
+            <strong>{{ resource.skill.skill_name }}</strong> -
+            <a href="{{ resource.url }}" target="_blank">{{ resource.title }}</a>
+        </li>
+    {% empty %}
+        <li>No learning resources added yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_learning_resource' %}">Add New Resource</a><br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

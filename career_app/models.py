@@ -36,6 +36,8 @@ class LearningResource(models.Model):
     title = models.CharField(max_length=200)
     url = models.URLField()
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title
 
 
 class InterviewQuestion(models.Model):

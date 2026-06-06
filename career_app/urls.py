@@ -17,4 +17,6 @@ urlpatterns = [
     path('view-skills/', views.view_skills, name='view_skills'),
     path('assign-skills/', views.assign_skills_to_role, name='assign_skills_to_role'),
     path('view-role-skills/', views.view_role_skills, name='view_role_skills'),
+    path('add-learning-resource/', views.add_learning_resource, name='add_learning_resource'),
+    path('view-learning-resources/', views.view_learning_resources, name='view_learning_resources'),
 ]

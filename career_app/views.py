@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import JobRole, Skill, JobRoleSkill
+from .models import JobRole, Skill, JobRoleSkill, LearningResource
 
 
 def home(request):
@@ -160,4 +160,40 @@ def view_role_skills(request):
 
     return render(request, 'career_app/view_role_skills.html', {
         'role_skills': role_skills
+    })
+@login_required
+def add_learning_resource(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    skills = Skill.objects.all()
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        url = request.POST.get('url')
+        skill_id = request.POST.get('skill')
+
+        if title and url and skill_id:
+            skill = Skill.objects.get(id=skill_id)
+            LearningResource.objects.create(
+                title=title,
+                url=url,
+                skill=skill
+            )
+            return redirect('view_learning_resources')
+
+    return render(request, 'career_app/add_learning_resource.html', {
+        'skills': skills
+    })
+
+
+@login_required
+def view_learning_resources(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    resources = LearningResource.objects.select_related('skill').all()
+
+    return render(request, 'career_app/view_learning_resources.html', {
+        'resources': resources
     })
