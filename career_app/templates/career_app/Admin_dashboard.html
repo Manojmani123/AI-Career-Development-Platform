@@ -1,0 +1,12 @@
+<h1>Admin Dashboard</h1>
+
+<p>Welcome, {{ request.user.username }}</p>
+
+<ul>
+    <li>Add Job Roles</li>
+    <li>Add Skills</li>
+    <li>Add Learning Resources</li>
+    <li>Add Interview Questions for Particular Role</li>
+</ul>
+
+<a href="{% url 'logout' %}">Logout</a>
