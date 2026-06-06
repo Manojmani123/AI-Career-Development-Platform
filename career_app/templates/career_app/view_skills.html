@@ -1,0 +1,12 @@
+<h1>All Skills</h1>
+
+<ul>
+    {% for skill in skills %}
+        <li>{{ skill.skill_name }}</li>
+    {% empty %}
+        <li>No skills added yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_skill' %}">Add New Skill</a><br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

@@ -13,4 +13,6 @@ urlpatterns = [
     path('super-admin-dashboard/', views.super_admin_dashboard_view, name='super_admin_dashboard'),
     path('add-job-role/', views.add_job_role, name='add_job_role'),
     path('view-job-roles/', views.view_job_roles, name='view_job_roles'),
+    path('add-skill/', views.add_skill, name='add_skill'),
+    path('view-skills/', views.view_skills, name='view_skills'),
 ]

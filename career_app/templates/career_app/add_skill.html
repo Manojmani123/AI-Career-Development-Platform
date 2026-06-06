@@ -1,0 +1,13 @@
+<h1>Add Skill</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Skill Name</label><br>
+    <input type="text" name="skill_name" required><br><br>
+
+    <button type="submit">Add Skill</button>
+</form>
+
+<br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

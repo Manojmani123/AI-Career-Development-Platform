@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import JobRole
+from .models import JobRole, Skill
 
 
 def home(request):
@@ -94,4 +94,29 @@ def view_job_roles(request):
 
     return render(request, 'career_app/view_job_roles.html', {
         'job_roles': job_roles
+    })
+@login_required
+def add_skill(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    if request.method == 'POST':
+        skill_name = request.POST.get('skill_name')
+
+        if skill_name:
+            Skill.objects.create(skill_name=skill_name)
+            return redirect('view_skills')
+
+    return render(request, 'career_app/add_skill.html')
+
+
+@login_required
+def view_skills(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    skills = Skill.objects.all()
+
+    return render(request, 'career_app/view_skills.html', {
+        'skills': skills
     })

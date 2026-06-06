@@ -21,6 +21,9 @@ class JobRole(models.Model):
 class Skill(models.Model):
     skill_name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.skill_name
+
 
 class JobRoleSkill(models.Model):
     job_role = models.ForeignKey(JobRole, on_delete=models.CASCADE)
