@@ -1,0 +1,30 @@
+<h1>Admin Requests</h1>
+
+<ul>
+    {% for request_item in requests %}
+        <li>
+            <strong>{{ request_item.full_name }}</strong><br>
+            Email: {{ request_item.email }}<br>
+            Status: {{ request_item.status }}<br>
+            Created: {{ request_item.created_at }}<br>
+
+            {% if request_item.status == "Pending" %}
+    <a href="{% url 'approve_admin_request' request_item.id %}">Approve</a>
+    |
+    <a href="{% url 'reject_admin_request' request_item.id %}">Reject</a>
+{% endif %}
+
+|
+
+<a href="{% url 'delete_admin_request' request_item.id %}"
+   onclick="return confirm('Are you sure you want to delete this request?')">
+   Delete
+</a>
+        </li>
+        <br>
+    {% empty %}
+        <li>No admin requests found.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'super_admin_dashboard' %}">Back to Super Admin Dashboard</a>

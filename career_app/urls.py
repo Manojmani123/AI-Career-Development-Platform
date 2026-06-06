@@ -23,4 +23,9 @@ urlpatterns = [
     path('view-interview-questions/', views.view_interview_questions, name='view_interview_questions'),
     path('view-users/', views.view_users, name='view_users'),
     path('view-admins/', views.view_admins, name='view_admins'),
+    path('admin-request/', views.admin_request, name='admin_request'),
+    path('view-admin-requests/', views.view_admin_requests, name='view_admin_requests'),
+    path('approve-admin-request/<int:request_id>/', views.approve_admin_request, name='approve_admin_request'),
+path('reject-admin-request/<int:request_id>/', views.reject_admin_request, name='reject_admin_request'),
+path('delete-admin-request/<int:request_id>/', views.delete_admin_request, name='delete_admin_request'),
 ]

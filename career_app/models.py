@@ -48,7 +48,7 @@ class InterviewQuestion(models.Model):
 
 class AdminRequest(models.Model):
     full_name = models.CharField(max_length=100)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
 
     status_choices = [
         ('Pending', 'Pending'),
@@ -61,3 +61,8 @@ class AdminRequest(models.Model):
         choices=status_choices,
         default='Pending'
     )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name

@@ -4,7 +4,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import JobRole, Skill, JobRoleSkill, LearningResource,  InterviewQuestion
 from django.contrib.auth.models import User
-
+from .models import AdminRequest
+from .models import AdminRequest
+from django.contrib import messages
 
 
 def home(request):
@@ -269,3 +271,91 @@ def view_admins(request):
     return render(request, 'career_app/view_admins.html', {
         'admins': admins
     })
+
+def admin_request(request):
+
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        email = request.POST.get('email')
+
+        AdminRequest.objects.create(
+            full_name=full_name,
+            email=email
+        )
+
+        return redirect('home')
+
+    return render(request, 'career_app/admin_request.html')
+@login_required
+def view_admin_requests(request):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    requests = AdminRequest.objects.all().order_by('-created_at')
+
+    return render(request, 'career_app/view_admin_requests.html', {
+        'requests': requests
+    })
+@login_required
+def approve_admin_request(request, request_id):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    admin_request = AdminRequest.objects.get(id=request_id)
+
+    username = admin_request.email.split('@')[0]
+
+    User.objects.create_user(
+        username=username,
+        email=admin_request.email,
+        password='Admin@12345',
+        is_staff=True
+    )
+
+    admin_request.status = 'Approved'
+    admin_request.save()
+
+    return redirect('view_admin_requests')
+
+
+@login_required
+def reject_admin_request(request, request_id):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    admin_request = AdminRequest.objects.get(id=request_id)
+    admin_request.status = 'Rejected'
+    admin_request.save()
+
+    return redirect('view_admin_requests')
+@login_required
+def approve_admin_request(request, request_id):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    admin_request = AdminRequest.objects.get(id=request_id)
+
+    username = admin_request.email.split('@')[0]
+    temp_password = 'Admin@12345'
+
+    if not User.objects.filter(email=admin_request.email).exists():
+        User.objects.create_user(
+            username=username,
+            email=admin_request.email,
+            password=temp_password,
+            is_staff=True
+        )
+
+    admin_request.status = 'Approved'
+    admin_request.save()
+
+    return redirect('view_admin_requests')
+@login_required
+def delete_admin_request(request, request_id):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    admin_request = AdminRequest.objects.get(id=request_id)
+    admin_request.delete()
+
+    return redirect('view_admin_requests')
