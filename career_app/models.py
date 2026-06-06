@@ -28,7 +28,9 @@ class Skill(models.Model):
 class JobRoleSkill(models.Model):
     job_role = models.ForeignKey(JobRole, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-
+    
+    def __str__(self):
+        return f"{self.job_role.role_name} - {self.skill.skill_name}"
 
 class LearningResource(models.Model):
     title = models.CharField(max_length=200)

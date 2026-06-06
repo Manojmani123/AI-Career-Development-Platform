@@ -1,0 +1,15 @@
+<h1>Role Skills</h1>
+
+<ul>
+    {% for item in role_skills %}
+        <li>
+            <strong>{{ item.job_role.role_name }}</strong>
+            - {{ item.skill.skill_name }}
+        </li>
+    {% empty %}
+        <li>No skills assigned to job roles yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'assign_skills_to_role' %}">Assign More Skills</a><br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

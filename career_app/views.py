@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import JobRole, Skill
+from .models import JobRole, Skill, JobRoleSkill
 
 
 def home(request):
@@ -119,4 +119,45 @@ def view_skills(request):
 
     return render(request, 'career_app/view_skills.html', {
         'skills': skills
+    })
+
+@login_required
+def assign_skills_to_role(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    job_roles = JobRole.objects.all()
+    skills = Skill.objects.all()
+
+    if request.method == 'POST':
+        job_role_id = request.POST.get('job_role')
+        selected_skills = request.POST.getlist('skills')
+
+        job_role = JobRole.objects.get(id=job_role_id)
+
+        for skill_id in selected_skills:
+            skill = Skill.objects.get(id=skill_id)
+
+            JobRoleSkill.objects.get_or_create(
+                job_role=job_role,
+                skill=skill
+            )
+
+        return redirect('view_role_skills')
+
+    return render(request, 'career_app/assign_skills.html', {
+        'job_roles': job_roles,
+        'skills': skills
+    })
+
+
+@login_required
+def view_role_skills(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    role_skills = JobRoleSkill.objects.select_related('job_role', 'skill').all()
+
+    return render(request, 'career_app/view_role_skills.html', {
+        'role_skills': role_skills
     })

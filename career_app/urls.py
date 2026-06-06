@@ -15,4 +15,6 @@ urlpatterns = [
     path('view-job-roles/', views.view_job_roles, name='view_job_roles'),
     path('add-skill/', views.add_skill, name='add_skill'),
     path('view-skills/', views.view_skills, name='view_skills'),
+    path('assign-skills/', views.assign_skills_to_role, name='assign_skills_to_role'),
+    path('view-role-skills/', views.view_role_skills, name='view_role_skills'),
 ]
