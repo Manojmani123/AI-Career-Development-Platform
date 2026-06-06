@@ -4,11 +4,13 @@
 
 <h2>Platform Overview</h2>
 
-<ul>
-    <li>Total Users: {{ total_users }}</li>
-    <li>Total Admins: {{ total_admins }}</li>
+
+    <ul>
+    <li><a href="{% url 'view_users' %}">Total Users: {{ total_users }}</a></li>
+    <li><a href="{% url 'view_admins' %}">Total Admins: {{ total_admins }}</a></li>
     <li>Total Job Roles: {{ total_job_roles }}</li>
 </ul>
+
 
 <h2>Management</h2>
 

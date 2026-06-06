@@ -247,3 +247,25 @@ def super_admin_dashboard_view(request):
         'total_admins': total_admins,
         'total_job_roles': total_job_roles,
     })
+@login_required
+def view_users(request):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    users = User.objects.filter(is_staff=False, is_superuser=False)
+
+    return render(request, 'career_app/view_users.html', {
+        'users': users
+    })
+
+
+@login_required
+def view_admins(request):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    admins = User.objects.filter(is_staff=True, is_superuser=False)
+
+    return render(request, 'career_app/view_admins.html', {
+        'admins': admins
+    })

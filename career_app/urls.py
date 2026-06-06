@@ -20,5 +20,7 @@ urlpatterns = [
     path('add-learning-resource/', views.add_learning_resource, name='add_learning_resource'),
     path('view-learning-resources/', views.view_learning_resources, name='view_learning_resources'),
     path('add-interview-question/', views.add_interview_question, name='add_interview_question'),
-path('view-interview-questions/', views.view_interview_questions, name='view_interview_questions'),
+    path('view-interview-questions/', views.view_interview_questions, name='view_interview_questions'),
+    path('view-users/', views.view_users, name='view_users'),
+    path('view-admins/', views.view_admins, name='view_admins'),
 ]

@@ -1,0 +1,11 @@
+<h1>All Admins</h1>
+
+<ul>
+    {% for admin in admins %}
+        <li>{{ admin.username }} - {{ admin.email }}</li>
+    {% empty %}
+        <li>No admins found.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'super_admin_dashboard' %}">Back</a>
