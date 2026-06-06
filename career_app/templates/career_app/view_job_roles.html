@@ -1,0 +1,16 @@
+<h1>Job Roles</h1>
+
+<a href="{% url 'add_job_role' %}">Add New Job Role</a>
+
+<ul>
+    {% for role in job_roles %}
+        <li>
+            <strong>{{ role.role_name }}</strong><br>
+            {{ role.description }}
+        </li>
+    {% empty %}
+        <li>No job roles added yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

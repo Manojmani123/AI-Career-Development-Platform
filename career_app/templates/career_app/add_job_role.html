@@ -1,0 +1,16 @@
+<h1>Add Job Role</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Job Role Name</label><br>
+    <input type="text" name="role_name" required><br><br>
+
+    <label>Description</label><br>
+    <textarea name="description" required></textarea><br><br>
+
+    <button type="submit">Add Job Role</button>
+</form>
+
+<br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

@@ -3,7 +3,8 @@
 <p>Welcome, {{ request.user.username }}</p>
 
 <ul>
-    <li>Add Job Roles</li>
+    <li><a href="{% url 'add_job_role' %}">Add Job Role</a></li>
+    <li><a href="{% url 'view_job_roles' %}">View Job Roles</a></li>
     <li>Add Skills</li>
     <li>Add Learning Resources</li>
     <li>Add Interview Questions for Particular Role</li>

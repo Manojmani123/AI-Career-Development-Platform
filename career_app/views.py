@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from .models import JobRole
 
 
 def home(request):
@@ -65,3 +66,32 @@ def super_admin_dashboard_view(request):
         return redirect('dashboard')
 
     return render(request, 'career_app/super_admin_dashboard.html')
+@login_required
+def add_job_role(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    if request.method == 'POST':
+        role_name = request.POST.get('role_name')
+        description = request.POST.get('description')
+
+        if role_name and description:
+            JobRole.objects.create(
+                role_name=role_name,
+                description=description
+            )
+            return redirect('view_job_roles')
+
+    return render(request, 'career_app/add_job_role.html')
+
+
+@login_required
+def view_job_roles(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    job_roles = JobRole.objects.all()
+
+    return render(request, 'career_app/view_job_roles.html', {
+        'job_roles': job_roles
+    })
