@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .models import JobRole, Skill, JobRoleSkill, LearningResource,  InterviewQuestion
+from django.contrib.auth.models import User
 
 
 
@@ -231,4 +232,18 @@ def view_interview_questions(request):
 
     return render(request, 'career_app/view_interview_questions.html', {
         'questions': questions
+    })
+@login_required
+def super_admin_dashboard_view(request):
+    if not request.user.is_superuser:
+        return redirect('dashboard')
+
+    total_users = User.objects.filter(is_staff=False, is_superuser=False).count()
+    total_admins = User.objects.filter(is_staff=True, is_superuser=False).count()
+    total_job_roles = JobRole.objects.count()
+
+    return render(request, 'career_app/super_admin_dashboard.html', {
+        'total_users': total_users,
+        'total_admins': total_admins,
+        'total_job_roles': total_job_roles,
     })

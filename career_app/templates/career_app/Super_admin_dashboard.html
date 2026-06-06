@@ -2,9 +2,17 @@
 
 <p>Welcome, {{ request.user.username }}</p>
 
+<h2>Platform Overview</h2>
+
 <ul>
-    <li>View Users Count</li>
-    <li>View Admins Count</li>
+    <li>Total Users: {{ total_users }}</li>
+    <li>Total Admins: {{ total_admins }}</li>
+    <li>Total Job Roles: {{ total_job_roles }}</li>
+</ul>
+
+<h2>Management</h2>
+
+<ul>
     <li>Generate Admin Invite Link</li>
     <li>View / Approve / Reject Admin Requests</li>
     <li>Delete User/Admin Accounts</li>
