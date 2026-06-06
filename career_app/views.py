@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import JobRole, Skill, JobRoleSkill, LearningResource
+from .models import JobRole, Skill, JobRoleSkill, LearningResource,  InterviewQuestion
+
 
 
 def home(request):
@@ -196,4 +197,38 @@ def view_learning_resources(request):
 
     return render(request, 'career_app/view_learning_resources.html', {
         'resources': resources
+    })
+@login_required
+def add_interview_question(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    job_roles = JobRole.objects.all()
+
+    if request.method == 'POST':
+        job_role_id = request.POST.get('job_role')
+        question = request.POST.get('question')
+
+        if job_role_id and question:
+            job_role = JobRole.objects.get(id=job_role_id)
+            InterviewQuestion.objects.create(
+                job_role=job_role,
+                question=question
+            )
+            return redirect('view_interview_questions')
+
+    return render(request, 'career_app/add_interview_question.html', {
+        'job_roles': job_roles
+    })
+
+
+@login_required
+def view_interview_questions(request):
+    if not request.user.is_staff:
+        return redirect('dashboard')
+
+    questions = InterviewQuestion.objects.select_related('job_role').all()
+
+    return render(request, 'career_app/view_interview_questions.html', {
+        'questions': questions
     })

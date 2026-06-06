@@ -19,4 +19,6 @@ urlpatterns = [
     path('view-role-skills/', views.view_role_skills, name='view_role_skills'),
     path('add-learning-resource/', views.add_learning_resource, name='add_learning_resource'),
     path('view-learning-resources/', views.view_learning_resources, name='view_learning_resources'),
+    path('add-interview-question/', views.add_interview_question, name='add_interview_question'),
+path('view-interview-questions/', views.view_interview_questions, name='view_interview_questions'),
 ]

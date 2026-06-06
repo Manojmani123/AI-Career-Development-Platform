@@ -1,0 +1,15 @@
+<h1>Interview Questions</h1>
+
+<ul>
+    {% for question in questions %}
+        <li>
+            <strong>{{ question.job_role.role_name }}</strong><br>
+            {{ question.question }}
+        </li>
+    {% empty %}
+        <li>No interview questions added yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_interview_question' %}">Add New Question</a><br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

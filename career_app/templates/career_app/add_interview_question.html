@@ -1,0 +1,23 @@
+<h1>Add Interview Question</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Select Job Role</label><br>
+    <select name="job_role" required>
+        <option value="">-- Select Job Role --</option>
+        {% for role in job_roles %}
+            <option value="{{ role.id }}">{{ role.role_name }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Interview Question</label><br>
+    <textarea name="question" required></textarea><br><br>
+
+    <button type="submit">Add Question</button>
+</form>
+
+<br>
+<a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>

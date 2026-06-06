@@ -43,7 +43,8 @@ class LearningResource(models.Model):
 class InterviewQuestion(models.Model):
     job_role = models.ForeignKey(JobRole, on_delete=models.CASCADE)
     question = models.TextField()
-
+    def __str__(self):
+        return self.question
 
 class AdminRequest(models.Model):
     full_name = models.CharField(max_length=100)
