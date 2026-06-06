@@ -1,3 +1,49 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
+
+
+class JobRole(models.Model):
+    role_name = models.CharField(max_length=100)
+    description = models.TextField()
+
+
+class Skill(models.Model):
+    skill_name = models.CharField(max_length=100)
+
+
+class JobRoleSkill(models.Model):
+    job_role = models.ForeignKey(JobRole, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+
+
+class LearningResource(models.Model):
+    title = models.CharField(max_length=200)
+    url = models.URLField()
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+
+
+class InterviewQuestion(models.Model):
+    job_role = models.ForeignKey(JobRole, on_delete=models.CASCADE)
+    question = models.TextField()
+
+
+class AdminRequest(models.Model):
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+
+    status_choices = [
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ]
+
+    status = models.CharField(
+        max_length=20,
+        choices=status_choices,
+        default='Pending'
+    )
